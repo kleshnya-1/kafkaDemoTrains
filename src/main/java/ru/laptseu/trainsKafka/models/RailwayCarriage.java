@@ -17,9 +17,9 @@ public class RailwayCarriage {
     private String name;
     private String machinist;
 
-    private static int MILLISECOND_TO_SLEEP_MIN=1000;
-    private static int MILLISECOND_TO_SLEEP_MAX=3000;
-    private static int NUM_OF_REPORTS_PER_UNIT=10;
+    private final int MILLISECOND_TO_SLEEP_MIN=1000;
+    private final int MILLISECOND_TO_SLEEP_MAX=3000;
+    private final int NUM_OF_REPORTS_PER_UNIT=10;
 
     public OdometerInfoFromCarriage getReport() {
         OdometerInfoFromCarriage odometerInfoFromCarriage = new OdometerInfoFromCarriage(id, odometerKm);

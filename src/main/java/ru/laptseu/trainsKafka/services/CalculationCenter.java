@@ -8,7 +8,7 @@ import ru.laptseu.trainsKafka.kafka.producers.StatisticProducer;
 import java.util.List;
 
 public class CalculationCenter {
-    private static int MILLISECOND_TO_SLEEP = 10;
+    private static int MILLISECOND_TO_SLEEP = 1000;
     private static int DURATION_MINUTES_QUERY = 10;
     private static int recourseKm = 1200_000;
 
@@ -20,7 +20,6 @@ public class CalculationCenter {
         Thread calculationCenterThread = new Thread(() -> {
             OdometerConsumer odometerConsumer = new OdometerConsumer();
             StatisticProducer statisticProducer = new StatisticProducer();
-
             while (odometerConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY).isEmpty()==false){
                 List<OdometerInfoFromCarriage> l = odometerConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY);
                 l.stream().forEach(odometerInfoFromCarriage -> {

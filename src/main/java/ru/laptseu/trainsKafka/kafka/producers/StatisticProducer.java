@@ -24,18 +24,18 @@ public class StatisticProducer {
 
     public void sendCarriageReportToKafka(PercentageMessage percentageMessage) {
                ProducerRecord<String, PercentageMessage> record = new ProducerRecord<>("Topic_statistic", "test_key", percentageMessage);
-//        producer.send(record);
+        producer.send(record);
         /** more info  */
-        producer.send(record, new Callback() {
-            @Override
-            public void onCompletion(RecordMetadata m, Exception e) {
-                if (e != null) {
-                    e.printStackTrace();
-                } else {
-                    System.out.printf("Produced statistic record to topic %s partition [%d] @ offset %d%n", m.topic(), m.partition(), m.offset());
-                }
-            }
-        });
+//        producer.send(record, new Callback() {
+//            @Override
+//            public void onCompletion(RecordMetadata m, Exception e) {
+//                if (e != null) {
+//                    e.printStackTrace();
+//                } else {
+//                    System.out.printf("Produced statistic record to topic %s partition [%d] @ offset %d%n", m.topic(), m.partition(), m.offset());
+//                }
+//            }
+//        });
     }
 
 

@@ -24,20 +24,17 @@ public class OdometerProducer {
     public void sendCarriageReportToKafka(OdometerInfoFromCarriage odometerInfoFromCarriage) {
 
         ProducerRecord<String, OdometerInfoFromCarriage> record = new ProducerRecord<>("Topic_odometer", "test_key", odometerInfoFromCarriage);
-//        producer.send(record);
+        producer.send(record);
 
         /** more info  */
-        producer.send(record, (m, e) -> {
-            if (e != null) {
-                e.printStackTrace();
-            } else {
-                System.out.printf("Produced odometer record to topic %s partition [%d] @ offset %d%n", m.topic(), m.partition(), m.offset());
-            }
-        });
+//        producer.send(record, (m, e) -> {
+//            if (e != null) {
+//                e.printStackTrace();
+//            } else {
+//                System.out.printf("Produced odometer record to topic %s partition [%d] @ offset %d%n", m.topic(), m.partition(), m.offset());
+//            }
+//        }        );
     }
-
-
-
 
     public void closeProducer(){
         producer.close();
