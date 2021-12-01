@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Getter
 public class CalculationCenter {
-    private static int MILLISECOND_TO_SLEEP = 1000;
+    private static int MILLISECOND_TO_SLEEP = 50;
     private static int DURATION_MINUTES_QUERY = 10;
     private static int recourseKm = 1200_000;
     private  int calculatingCounter = 0;

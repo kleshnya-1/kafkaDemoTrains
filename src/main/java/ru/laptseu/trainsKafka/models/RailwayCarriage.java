@@ -40,6 +40,7 @@ public class RailwayCarriage {
                     odometerKm *= 1.15;
                 }
                 odometerProducer.closeProducer();
+            System.out.println("Вагон на потоке "+Thread.currentThread().getName()+" закончил отчет");
         });
         thread1.start();
     }
