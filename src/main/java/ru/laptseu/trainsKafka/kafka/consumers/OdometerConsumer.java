@@ -28,6 +28,7 @@ public class OdometerConsumer {
     public List<OdometerInfoFromCarriage> getInfoFromKafka(int num) {
             consumer.subscribe(Collections.singletonList("Topic_odometer"));
             List<OdometerInfoFromCarriage> list = new ArrayList<>();
+
             ConsumerRecords<String, OdometerInfoFromCarriage> records = consumer.poll(Duration.ofMinutes(num));
             for (ConsumerRecord cr:records){
                 list.add((OdometerInfoFromCarriage) cr.value());

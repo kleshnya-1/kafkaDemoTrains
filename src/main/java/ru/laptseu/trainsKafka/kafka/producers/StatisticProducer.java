@@ -12,6 +12,7 @@ public class StatisticProducer {
 
     Properties properties;
     Producer producer;
+    Boolean enableLogging = false;
 
     public StatisticProducer() {
         properties = new Properties();
@@ -20,26 +21,30 @@ public class StatisticProducer {
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaJsonSerializer");
         producer = new KafkaProducer<String, OdometerInfoFromCarriage>(properties);
+
     }
 
     public void sendCarriageReportToKafka(PercentageMessage percentageMessage) {
-               ProducerRecord<String, PercentageMessage> record = new ProducerRecord<>("Topic_statistic", "test_key", percentageMessage);
-        producer.send(record);
-        /** more info  */
-//        producer.send(record, new Callback() {
-//            @Override
-//            public void onCompletion(RecordMetadata m, Exception e) {
-//                if (e != null) {
-//                    e.printStackTrace();
-//                } else {
-//                    System.out.printf("Produced statistic record to topic %s partition [%d] @ offset %d%n", m.topic(), m.partition(), m.offset());
-//                }
-//            }
-//        });
+        ProducerRecord<String, PercentageMessage> record = new ProducerRecord<>("Topic_statistic", "test_key", percentageMessage);
+
+        if (!enableLogging) {
+            producer.send(record);
+        } else {
+            /** more info  */
+            producer.send(record, new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata m, Exception e) {
+                    if (e != null) {
+                        e.printStackTrace();
+                    } else {
+                        System.out.printf("Produced statistic record to topic %s partition [%d] @ offset %d%n", m.topic(), m.partition(), m.offset());
+                    }
+                }
+            });
+        }
     }
 
-
-     public void closeProducer(){
-    producer.close();
-     }
+    public void closeProducer() {
+        producer.close();
+    }
 }

@@ -32,6 +32,7 @@ public class StatisticConsumer {
     public List<PercentageMessage> getInfoFromKafka(int num) {
             consumer.subscribe(Collections.singletonList("Topic_statistic"));
             List<PercentageMessage> list = new ArrayList<>();
+
             ConsumerRecords<String, PercentageMessage> records = consumer.poll(Duration.ofMinutes(num));
             for (ConsumerRecord cr:records){
                 list.add((PercentageMessage) cr.value());
