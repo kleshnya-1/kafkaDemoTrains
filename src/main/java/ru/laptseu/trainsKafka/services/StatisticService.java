@@ -37,8 +37,6 @@ public class StatisticService {
 
         Thread statisticThread = new Thread(() -> {
             for (int i = 0; i <= (2 + railwayCarriage.getMILLISECOND_TO_SLEEP_MAX() * MESSAGES_PER_CARRIAGE / REPORTING_INTERVAL_MS); i++) {
-                System.out.println();
-                System.out.println();
                 System.out.println("------------------------------------");
                 System.out.println("Парк вагонов:");
                 System.out.println("Всего вагонов: " + NUM_OF_CARRIAGES_FOR_TEST);
@@ -49,17 +47,13 @@ public class StatisticService {
 //                System.out.println("Сообщений в топике пробегов: "+);
 //                System.out.println("Сообщений в топике ресурса: "+((List)consumerStatistic.poll(Duration.ofMinutes(2))).size());
 
-                System.out.println();
                 System.out.println("Центр статистики: ----------");
-                System.out.println("Подсчитано вагонов: " + calculationCenter.getCalculatingCounter());
-
+                System.out.println("Подсчитано отчетов: " + calculationCenter.getCalculatingCounter());
                 System.out.println("Сообщений в очереди: " + calculationCenter.getInQueryCounter());
                 System.out.println("Скорость обработки: " + calculationCenter.getMsPerMessage() + " мс/сообщение");
-                System.out.println();
                 System.out.println("Центр механики: ----------");
                 System.out.println("Получено отчетов: " + mechanicsCenter.getReceivedReports());
                 System.out.println("Ресурс парка: " + mechanicsCenter.getState());
-
                 System.out.println("____________________________________");
                 try {
                     Thread.sleep(REPORTING_INTERVAL_MS);

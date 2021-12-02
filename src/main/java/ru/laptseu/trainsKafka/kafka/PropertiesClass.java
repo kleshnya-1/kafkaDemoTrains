@@ -15,7 +15,7 @@ public class PropertiesClass {
     static Properties propertiesProducerStatistic = new Properties();
     static Properties propertiesConsumerOdometer = new Properties();
     static Properties propertiesConsumerStatistic = new Properties();
-    private static boolean isLoggingEnabledInOdometer = true;
+    private static boolean isLoggingEnabledInOdometer = false;
     private static boolean isLoggingEnabledInStatistic = false;
 
     static {

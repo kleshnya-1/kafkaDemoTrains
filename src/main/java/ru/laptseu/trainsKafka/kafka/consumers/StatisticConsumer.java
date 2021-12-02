@@ -24,8 +24,10 @@ public class StatisticConsumer {
             consumer.subscribe(Collections.singletonList("Topic_statistic"));
             List<PercentageMessage> list = new ArrayList<>();
             ConsumerRecords<String, PercentageMessage> records = consumer.poll(Duration.ofMinutes(num));
-            for (ConsumerRecord cr:records){
-                list.add((PercentageMessage) cr.value());
+            if (!list.isEmpty()){
+                for (ConsumerRecord cr:records){
+                    list.add((PercentageMessage) cr.value());
+                }
             }
             return list;
     }

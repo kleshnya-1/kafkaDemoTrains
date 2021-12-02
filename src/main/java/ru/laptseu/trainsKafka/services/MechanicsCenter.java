@@ -20,7 +20,8 @@ public class MechanicsCenter {
         Thread mechanicsThread = new Thread(() -> {
 
             StatisticConsumer statisticConsumer = new StatisticConsumer();
-            while (statisticConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY).isEmpty() == false) {
+            while (true) {
+                List ll = statisticConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY);
                 List<PercentageMessage> l = statisticConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY);
                 l.stream().forEach(percentageMessage -> {
                     list.add(percentageMessage);
@@ -32,7 +33,7 @@ public class MechanicsCenter {
                     e.printStackTrace();
                 }
             }
-            statisticConsumer.closeConsumer();
+           // statisticConsumer.closeConsumer();
         });
         mechanicsThread.start();
     }
