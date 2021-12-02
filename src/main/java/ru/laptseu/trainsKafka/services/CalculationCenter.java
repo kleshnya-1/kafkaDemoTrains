@@ -13,10 +13,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Getter
 public class CalculationCenter {
-    private static int MILLISECOND_TO_SLEEP = 50;
-    private static int DURATION_MINUTES_QUERY = 10;
+    private static int MILLISECOND_TO_SLEEP = 100;
+    private static int DURATION_MINUTES_QUERY = 2;
     private static int recourseKm = 1200_000;
-    private  int calculatingCounter = 0;
+    private  AtomicInteger calculatingCounter = new AtomicInteger(0);
+
     private  int inQueryCounter = 0;
     private  AtomicInteger msPerMessage = new AtomicInteger();
 
@@ -25,7 +26,7 @@ public class CalculationCenter {
     StatisticProducer statisticProducer = new StatisticProducer();
 
     public PercentageMessage calculate(OdometerInfoFromCarriage o) {
-        calculatingCounter++;
+        calculatingCounter.incrementAndGet();
         return new PercentageMessage(o.getCarriageId(), 100 - 100 * o.getOdometerKm() / recourseKm);
     }
 
@@ -46,6 +47,7 @@ public class CalculationCenter {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     statisticProducer.sendCarriageReportToKafka(calculate(odometerInfoFromCarriage));
                     endTime.set(System.currentTimeMillis());
                     msPerMessage.set((int) ((endTime.get() - startTime.get()) / l.size()));

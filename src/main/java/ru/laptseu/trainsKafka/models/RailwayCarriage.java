@@ -29,7 +29,7 @@ public class RailwayCarriage {
     public void sendInfoToKafka() {
         Thread thread1 = new Thread(() -> {
                 OdometerProducer odometerProducer = new OdometerProducer();
-                for (int i = 0; i <= NUM_OF_REPORTS_PER_UNIT; i++) {
+                for (int i = 1; i <= NUM_OF_REPORTS_PER_UNIT; i++) {
                     try {
                         Thread.sleep(ThreadLocalRandom.current().nextInt
                                 (MILLISECOND_TO_SLEEP_MIN, MILLISECOND_TO_SLEEP_MAX+1));

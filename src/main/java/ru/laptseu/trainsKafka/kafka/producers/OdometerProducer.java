@@ -12,7 +12,7 @@ public class OdometerProducer {
 
     Properties properties = PropertiesClass.getPropertiesProducerOdometer();
     Producer producer = new KafkaProducer<String, OdometerInfoFromCarriage>(properties);
-    Boolean enableLogging = false;
+    Boolean enableLogging = PropertiesClass.isLoggingEnabledInOdometer();
 
     public OdometerProducer() {
     }

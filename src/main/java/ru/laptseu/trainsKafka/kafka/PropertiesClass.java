@@ -2,9 +2,7 @@ package ru.laptseu.trainsKafka.kafka;
 
 import io.confluent.kafka.serializers.KafkaJsonDeserializerConfig;
 import lombok.Getter;
-import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import ru.laptseu.trainsKafka.models.messages.OdometerInfoFromCarriage;
 import ru.laptseu.trainsKafka.models.messages.PercentageMessage;
@@ -12,12 +10,13 @@ import ru.laptseu.trainsKafka.models.messages.PercentageMessage;
 import java.util.Properties;
 
 @Getter
-public  class PropertiesClass {
+public class PropertiesClass {
     static Properties propertiesProducerOdometer = new Properties();
     static Properties propertiesProducerStatistic = new Properties();
-
     static Properties propertiesConsumerOdometer = new Properties();
     static Properties propertiesConsumerStatistic = new Properties();
+    private static boolean isLoggingEnabledInOdometer = true;
+    private static boolean isLoggingEnabledInStatistic = false;
 
     static {
         propertiesProducerOdometer.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
@@ -50,9 +49,11 @@ public  class PropertiesClass {
     public static Properties getPropertiesConsumerOdometer() {
         return propertiesConsumerOdometer;
     }
+
     public static Properties getPropertiesConsumerStatistic() {
         return propertiesConsumerStatistic;
     }
+
     public static Properties getPropertiesProducerOdometer() {
         return propertiesProducerOdometer;
     }
@@ -61,4 +62,11 @@ public  class PropertiesClass {
         return propertiesProducerStatistic;
     }
 
+    public static boolean isLoggingEnabledInOdometer() {
+        return isLoggingEnabledInOdometer;
+    }
+
+    public static boolean isLoggingEnabledInStatistic() {
+        return isLoggingEnabledInStatistic;
+    }
 }

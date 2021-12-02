@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Getter
 public class MechanicsCenter {
-    private static int DURATION_MINUTES_QUERY = 10;
+    private static int DURATION_MINUTES_QUERY = 2;
 
     private  int receivedReports =0;
 
