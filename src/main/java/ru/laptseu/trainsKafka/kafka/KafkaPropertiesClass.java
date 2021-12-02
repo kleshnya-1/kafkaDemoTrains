@@ -10,7 +10,7 @@ import ru.laptseu.trainsKafka.models.messages.PercentageMessage;
 import java.util.Properties;
 
 @Getter
-public class PropertiesClass {
+public class KafkaPropertiesClass {
     static Properties propertiesProducerOdometer = new Properties();
     static Properties propertiesProducerStatistic = new Properties();
     static Properties propertiesConsumerOdometer = new Properties();
@@ -29,7 +29,6 @@ public class PropertiesClass {
         propertiesProducerStatistic.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         propertiesProducerStatistic.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaJsonSerializer");
 
-
         propertiesConsumerOdometer.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         propertiesConsumerOdometer.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         propertiesConsumerOdometer.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaJsonDeserializer");
@@ -43,7 +42,6 @@ public class PropertiesClass {
         propertiesConsumerStatistic.put(ConsumerConfig.GROUP_ID_CONFIG, "statistic-consumer-1");
         propertiesConsumerStatistic.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         propertiesConsumerStatistic.put(KafkaJsonDeserializerConfig.JSON_VALUE_TYPE, PercentageMessage.class);
-
     }
 
     public static Properties getPropertiesConsumerOdometer() {

@@ -3,14 +3,11 @@ package ru.laptseu.trainsKafka.services;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import ru.laptseu.trainsKafka.kafka.PropertiesClass;
+import ru.laptseu.trainsKafka.kafka.KafkaPropertiesClass;
 import ru.laptseu.trainsKafka.models.RailwayCarriage;
 import ru.laptseu.trainsKafka.models.messages.OdometerInfoFromCarriage;
 
-import java.time.Duration;
-import java.time.temporal.TemporalAmount;
 import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
 
 @RequiredArgsConstructor
@@ -19,14 +16,14 @@ public class StatisticService {
     private final int REPORTING_INTERVAL_MS;
     private final int NUM_OF_CARRIAGES_FOR_TEST;
     private int MESSAGES_PER_CARRIAGE = 10;
-    private final CalculationCenter calculationCenter;
-    private final MechanicsCenter mechanicsCenter;
+    private final CalculationService calculationService;
+    private final MechanicsService mechanicsService;
 
 
-    Properties propertiesConsumerOdometer = PropertiesClass.getPropertiesConsumerOdometer();
+    Properties propertiesConsumerOdometer = KafkaPropertiesClass.getPropertiesConsumerOdometer();
     Consumer<String, OdometerInfoFromCarriage> consumerOdometer = new KafkaConsumer<String, OdometerInfoFromCarriage>(propertiesConsumerOdometer);
 
-    Properties propertiesConsumerStatistic = PropertiesClass.getPropertiesConsumerStatistic();
+    Properties propertiesConsumerStatistic = KafkaPropertiesClass.getPropertiesConsumerStatistic();
     Consumer<String, OdometerInfoFromCarriage> consumerStatistic = new KafkaConsumer<String, OdometerInfoFromCarriage>(propertiesConsumerOdometer);
 
     public void printInfo() {
@@ -48,12 +45,12 @@ public class StatisticService {
 //                System.out.println("Сообщений в топике ресурса: "+((List)consumerStatistic.poll(Duration.ofMinutes(2))).size());
 
                 System.out.println("Центр статистики: ----------");
-                System.out.println("Подсчитано отчетов: " + calculationCenter.getCalculatingCounter());
-                System.out.println("Сообщений в очереди: " + calculationCenter.getInQueryCounter());
-                System.out.println("Скорость обработки: " + calculationCenter.getMsPerMessage() + " мс/сообщение");
+                System.out.println("Подсчитано отчетов: " + calculationService.getCalculatingCounter());
+                System.out.println("Сообщений в очереди: " + calculationService.getInQueryCounter()+ " (время паузы "+ calculationService.getMillisecondToSleep()+"ms)") ;
+                System.out.println("Скорость обработки: " + calculationService.getMsPerMessage() + " мс/сообщение");
                 System.out.println("Центр механики: ----------");
-                System.out.println("Получено отчетов: " + mechanicsCenter.getReceivedReports());
-                System.out.println("Ресурс парка: " + mechanicsCenter.getState());
+                System.out.println("Получено отчетов: " + mechanicsService.getReceivedReports());
+                System.out.println("Ресурс парка: " + mechanicsService.getState());
                 System.out.println("____________________________________");
                 try {
                     Thread.sleep(REPORTING_INTERVAL_MS);

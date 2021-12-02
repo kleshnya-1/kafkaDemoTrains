@@ -9,49 +9,46 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Getter
-public class MechanicsCenter {
+public class MechanicsService {
     private static int DURATION_MINUTES_QUERY = 2;
-
-    private  int receivedReports =0;
-
+    private int receivedReports = 0;
     List<PercentageMessage> list = new ArrayList<>();
 
     public void getStatisticAndCalculateState() {
         Thread mechanicsThread = new Thread(() -> {
-
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Механики начали работу");
             StatisticConsumer statisticConsumer = new StatisticConsumer();
-            while (true) {
-                List ll = statisticConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY);
-                List<PercentageMessage> l = statisticConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY);
-                l.stream().forEach(percentageMessage -> {
+            List<PercentageMessage> statisticFromKafka = statisticConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY);
+            while (!statisticFromKafka.isEmpty()) {
+                statisticFromKafka.stream().forEach(percentageMessage -> {
                     list.add(percentageMessage);
                     receivedReports++;
                 });
-                try {
-                    Thread.sleep(250);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                statisticFromKafka = statisticConsumer.getInfoFromKafka(DURATION_MINUTES_QUERY);
             }
            // statisticConsumer.closeConsumer();
+            System.out.println("Механики закончили работу, обработав " + list.size() + " отчетов и определив ресурс парка в " + getState() + " %");
         });
         mechanicsThread.start();
     }
 
     public int getState() {
-        AtomicLong sum= new AtomicLong();
+        AtomicLong sum = new AtomicLong();
         Thread mechanicsThreadState = new Thread(() -> {
-            for (PercentageMessage pm : list){
+            for (PercentageMessage pm : list) {
                 sum.set(+pm.getPercentageOfRecourse());
             }
         });
         mechanicsThreadState.start();
-        if (sum.get()!=0|| list.size()!=0){
-            return (int) (sum.get() /list.size());
-
+        if (sum.get() != 0 || list.size() != 0) {
+            return (int) (sum.get() * 100 / list.size());
         } else {
             return 0;
         }
-
     }
 }

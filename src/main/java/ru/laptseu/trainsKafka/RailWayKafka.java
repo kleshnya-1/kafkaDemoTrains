@@ -2,13 +2,13 @@ package ru.laptseu.trainsKafka;
 
 import lombok.Getter;
 import ru.laptseu.trainsKafka.models.RailwayCarriage;
-import ru.laptseu.trainsKafka.services.CalculationCenter;
-import ru.laptseu.trainsKafka.services.MechanicsCenter;
+import ru.laptseu.trainsKafka.services.CalculationService;
+import ru.laptseu.trainsKafka.services.MechanicsService;
 import ru.laptseu.trainsKafka.services.StatisticService;
 
 @Getter
-public class RailwayKafka {
-    private static int NUM_OF_CARRIAGES_FOR_TEST=25;
+public class RailWayKafka {
+    private static int NUM_OF_CARRIAGES_FOR_TEST=10;
 
     public static void main(String[] args) {
         System.out.println("starting reporting");
@@ -20,14 +20,14 @@ public class RailwayKafka {
             railwayCarriage.sendInfoToKafka();
         }
 
-        CalculationCenter calculationCenter = new CalculationCenter();
-        calculationCenter.getCalculateAndSendInfoToKafka();
+        CalculationService calculationService = new CalculationService();
+        calculationService.getCalculateAndSendInfoToKafka();
 
-        MechanicsCenter mechanicsCenter = new MechanicsCenter();
-        mechanicsCenter.getStatisticAndCalculateState();
+        MechanicsService mechanicsService = new MechanicsService();
+        mechanicsService.getStatisticAndCalculateState();
 
         StatisticService statisticService = new StatisticService(1000,NUM_OF_CARRIAGES_FOR_TEST,
-                calculationCenter,mechanicsCenter);
+                calculationService, mechanicsService);
         statisticService.printInfo();
     }
 }

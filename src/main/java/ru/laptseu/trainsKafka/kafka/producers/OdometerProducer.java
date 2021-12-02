@@ -1,7 +1,7 @@
 package ru.laptseu.trainsKafka.kafka.producers;
 
 import lombok.extern.log4j.Log4j;
-import ru.laptseu.trainsKafka.kafka.PropertiesClass;
+import ru.laptseu.trainsKafka.kafka.KafkaPropertiesClass;
 import ru.laptseu.trainsKafka.models.messages.OdometerInfoFromCarriage;
 import org.apache.kafka.clients.producer.*;
 
@@ -10,9 +10,9 @@ import java.util.Properties;
 @Log4j
 public class OdometerProducer {
 
-    Properties properties = PropertiesClass.getPropertiesProducerOdometer();
+    Properties properties = KafkaPropertiesClass.getPropertiesProducerOdometer();
     Producer producer = new KafkaProducer<String, OdometerInfoFromCarriage>(properties);
-    Boolean enableLogging = PropertiesClass.isLoggingEnabledInOdometer();
+    Boolean enableLogging = KafkaPropertiesClass.isLoggingEnabledInOdometer();
 
     public OdometerProducer() {
     }

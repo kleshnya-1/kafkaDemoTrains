@@ -2,7 +2,7 @@ package ru.laptseu.trainsKafka.kafka.producers;
 
 import lombok.extern.log4j.Log4j;
 import org.apache.kafka.clients.producer.*;
-import ru.laptseu.trainsKafka.kafka.PropertiesClass;
+import ru.laptseu.trainsKafka.kafka.KafkaPropertiesClass;
 import ru.laptseu.trainsKafka.models.messages.OdometerInfoFromCarriage;
 import ru.laptseu.trainsKafka.models.messages.PercentageMessage;
 
@@ -11,9 +11,9 @@ import java.util.Properties;
 @Log4j
 public class StatisticProducer {
 
-    Properties properties = PropertiesClass.getPropertiesProducerStatistic();
+    Properties properties = KafkaPropertiesClass.getPropertiesProducerStatistic();
     Producer producer= new KafkaProducer<String, OdometerInfoFromCarriage>(properties);
-    Boolean enableLogging = PropertiesClass.isLoggingEnabledInStatistic();
+    Boolean enableLogging = KafkaPropertiesClass.isLoggingEnabledInStatistic();
 
     public StatisticProducer() {
     }
